@@ -4,7 +4,6 @@ import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
 import { embedderSettings } from "@/main";
 import { v4 } from "uuid";
-import AnythingLLMIcon from "@/assets/anything-llm-icon.svg";
 import { formatDate } from "@/utils/date";
 
 const ThoughtBubble = ({ thought }) => {
@@ -67,9 +66,9 @@ const HistoricalMessage = forwardRef(
     return (
       <div className="allm-py-[5px]">
         {role === "assistant" && (
-          <div className="allm-text-[10px] allm-text-gray-400 allm-ml-[54px] allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
+          <div className="allm-text-[10px] allm-text-gray-400 allm-ml-2 allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
             {embedderSettings.settings.assistantName ||
-              "Anything LLM Chat Assistant"}
+              "Chat Assistant"}
           </div>
         )}
         <div
@@ -79,14 +78,6 @@ const HistoricalMessage = forwardRef(
             role === "user" ? "allm-justify-end" : "allm-justify-start"
           }`}
         >
-          {role === "assistant" && (
-            <img
-              src={embedderSettings.settings.assistantIcon || AnythingLLMIcon}
-              alt="Anything LLM Icon"
-              className="allm-w-9 allm-h-9 allm-flex-shrink-0 allm-ml-2"
-              id="anything-llm-icon"
-            />
-          )}
           <div
             style={{
               wordBreak: "break-word",
@@ -100,7 +91,7 @@ const HistoricalMessage = forwardRef(
                 ? "allm-bg-red-200 allm-rounded-lg allm-mr-[37px] allm-ml-[9px]"
                 : role === "user"
                   ? `${embedderSettings.USER_STYLES.base} allm-anything-llm-user-message`
-                  : `${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message`
+                  : `${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message allm-ml-2`
             } allm-shadow-[0_4px_14px_rgba(0,0,0,0.25)]`}
           >
             <div className="allm-flex allm-flex-col">
@@ -135,7 +126,7 @@ const HistoricalMessage = forwardRef(
 
         {sentAt && (
           <div
-            className={`allm-font-sans allm-text-[10px] allm-text-gray-400 allm-ml-[54px] allm-mr-6 allm-mt-2 ${role === "user" ? "allm-text-right" : "allm-text-left"}`}
+            className={`allm-font-sans allm-text-[10px] allm-text-gray-400 allm-mr-6 allm-mt-2 ${role === "user" ? "allm-ml-[54px] allm-text-right" : "allm-ml-2 allm-text-left"}`}
           >
             {formatDate(sentAt)}
           </div>

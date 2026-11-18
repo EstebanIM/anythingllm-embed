@@ -15,7 +15,7 @@ const DEFAULT_SETTINGS = {
   chatIcon: "chatBubble",
   brandImageUrl: null, // will be forced into 100x50px container
   greeting: null, // empty chat window greeting.
-  buttonColor: "#262626", // must be hex color code
+  buttonColor: "#1A73E8", // Portal GC blue; any CSS color works
   userBgColor: "#2C2F35", // user text bubble color
   assistantBgColor: "#2563eb", // assistant text bubble color
   noSponsor: true, // Hide the sponsor footer unless branding provides one.

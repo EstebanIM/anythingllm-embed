@@ -3,6 +3,24 @@ import { Warning, CircleNotch, CaretDown } from "@phosphor-icons/react";
 import renderMarkdown from "@/utils/chat/markdown";
 import { embedderSettings } from "@/main";
 import { formatDate } from "@/utils/date";
+import { readableTextColor } from "@/utils/color";
+import {
+  BUBBLE_FONT,
+  BUBBLE_ROW,
+  BUBBLE_PADDING,
+  ASSISTANT_NAME,
+  TIMESTAMP_ASSISTANT,
+  ERROR_BUBBLE,
+  ERROR_TEXT,
+} from "../bubbleStyles";
+
+const assistantBubbleStyle = () => ({
+  wordBreak: "break-word",
+  backgroundColor: embedderSettings.ASSISTANT_STYLES.msgBg,
+  color: readableTextColor(embedderSettings.ASSISTANT_STYLES.msgBg),
+});
+const assistantBubbleClass = () =>
+  `${BUBBLE_PADDING} allm-flex allm-flex-col ${BUBBLE_FONT} ${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message`;
 
 const ThinkingIndicator = ({ hasThought }) => {
   if (hasThought) {
@@ -81,19 +99,13 @@ const PromptReply = forwardRef(
 
     if (isThinking) {
       return (
-        <div className="allm-py-[5px]">
-          <div className="allm-text-[10px] allm-text-gray-400 allm-ml-2 allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
+        <div className={BUBBLE_ROW}>
+          <div className={ASSISTANT_NAME}>
             {embedderSettings.settings.assistantName ||
               "Chat Assistant"}
           </div>
           <div className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start">
-            <div
-              style={{
-                wordBreak: "break-word",
-                backgroundColor: embedderSettings.ASSISTANT_STYLES.msgBg,
-              }}
-              className={`allm-py-[11px] allm-px-4 allm-flex allm-flex-col ${embedderSettings.ASSISTANT_STYLES.base} allm-shadow-[0_4px_14px_rgba(0,0,0,0.25)] allm-ml-2`}
-            >
+            <div style={assistantBubbleStyle()} className={assistantBubbleClass()}>
               {hasIncompleteThinkTag && streamingThought && (
                 <ThoughtBubble thought={streamingThought} />
               )}
@@ -106,19 +118,23 @@ const PromptReply = forwardRef(
 
     if (error) {
       return (
-        <div className="allm-py-[5px]">
-          <div className="allm-text-[10px] allm-text-gray-400 allm-ml-2 allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
+        <div className={BUBBLE_ROW}>
+          <div className={ASSISTANT_NAME}>
             {embedderSettings.settings.assistantName ||
               "Chat Assistant"}
           </div>
           <div className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start">
-            <div className="allm-py-[11px] allm-px-4 allm-rounded-lg allm-flex allm-flex-col allm-bg-red-200 allm-shadow-[0_4px_14px_rgba(0,0,0,0.25)] allm-mr-[37px] allm-ml-[9px]">
-              <div className="allm-flex allm-gap-x-5">
-                <span className="allm-inline-block allm-p-2 allm-rounded-lg allm-bg-red-50 allm-text-red-500">
-                  <Warning className="allm-h-4 allm-w-4 allm-mb-1 allm-inline-block" />{" "}
+            <div
+              className={`${BUBBLE_PADDING} allm-flex allm-flex-col ${BUBBLE_FONT} ${ERROR_BUBBLE} allm-anything-llm-assistant-message`}
+            >
+              <div className={ERROR_TEXT}>
+                <span className="allm-inline-flex allm-items-center allm-gap-x-1.5 allm-font-medium">
+                  <Warning className="allm-h-4 allm-w-4" weight="bold" />
                   Could not respond to message.
-                  <span className="allm-text-xs">Server error</span>
                 </span>
+                <p className="allm-text-xs allm-font-mono allm-mt-2 allm-mb-0">
+                  Server error
+                </p>
               </div>
             </div>
           </div>
@@ -127,8 +143,8 @@ const PromptReply = forwardRef(
     }
 
     return (
-      <div className="allm-py-[5px]">
-        <div className="allm-text-[10px] allm-text-gray-400 allm-ml-2 allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
+      <div className={BUBBLE_ROW}>
+        <div className={ASSISTANT_NAME}>
           {embedderSettings.settings.assistantName ||
             "Chat Assistant"}
         </div>
@@ -137,19 +153,13 @@ const PromptReply = forwardRef(
           ref={ref}
           className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start"
         >
-          <div
-            style={{
-              wordBreak: "break-word",
-              backgroundColor: embedderSettings.ASSISTANT_STYLES.msgBg,
-            }}
-            className={`allm-py-[11px] allm-px-4 allm-flex allm-flex-col ${embedderSettings.ASSISTANT_STYLES.base} allm-shadow-[0_4px_14px_rgba(0,0,0,0.25)] allm-ml-2`}
-          >
+          <div style={assistantBubbleStyle()} className={assistantBubbleClass()}>
             {thoughts.length > 0 && (
               <ThoughtBubble thought={thoughts.join("\n\n")} />
             )}
             <div className="allm-flex allm-gap-x-5">
               <span
-                className="allm-font-sans allm-reply allm-whitespace-pre-line allm-font-normal allm-text-sm allm-md:text-sm allm-flex allm-flex-col allm-gap-y-1"
+                className="allm-reply allm-whitespace-pre-line allm-font-normal allm-text-sm allm-md:text-sm allm-flex allm-flex-col allm-gap-y-1"
                 dangerouslySetInnerHTML={{
                   __html: renderMarkdown(responseContent || ""),
                 }}
@@ -158,7 +168,7 @@ const PromptReply = forwardRef(
           </div>
         </div>
         {sentAt && (
-          <div className="allm-text-[10px] allm-text-gray-400 allm-ml-2 allm-mr-6 allm-mt-2 allm-text-left allm-font-sans">
+          <div className={TIMESTAMP_ASSISTANT}>
             {formatDate(sentAt)}
           </div>
         )}

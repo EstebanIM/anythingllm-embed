@@ -17,12 +17,14 @@ export const embedderSettings = {
   settings: scriptSettings,
   stylesSrc: parseStylesSrc(document?.currentScript?.src),
   USER_STYLES: {
-    msgBg: scriptSettings?.userBgColor ?? "#3DBEF5",
-    base: `allm-text-white allm-rounded-t-[18px] allm-rounded-bl-[18px] allm-rounded-br-[4px] allm-mx-[20px]`,
+    // Defaults follow the Portal GC palette. Text color is not set here: the
+    // bubbles derive it from msgBg (utils/color.js) so any brand stays legible.
+    msgBg: scriptSettings?.userBgColor ?? "#1A73E8",
+    base: `allm-rounded-t-[16px] allm-rounded-bl-[16px] allm-rounded-br-[6px] allm-ml-[48px] allm-mr-3`,
   },
   ASSISTANT_STYLES: {
-    msgBg: scriptSettings?.assistantBgColor ?? "#FFFFFF",
-    base: `allm-text-[#222628] allm-rounded-t-[18px] allm-rounded-br-[18px] allm-rounded-bl-[4px] allm-mr-[37px] allm-ml-[9px]`,
+    msgBg: scriptSettings?.assistantBgColor ?? "#F4F5F6",
+    base: `allm-rounded-t-[16px] allm-rounded-br-[16px] allm-rounded-bl-[6px] allm-mr-[48px] allm-ml-3`,
   },
 };
 

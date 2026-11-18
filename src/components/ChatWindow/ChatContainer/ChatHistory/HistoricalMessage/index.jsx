@@ -5,6 +5,17 @@ import DOMPurify from "@/utils/chat/purify";
 import { embedderSettings } from "@/main";
 import { v4 } from "uuid";
 import { formatDate } from "@/utils/date";
+import { readableTextColor } from "@/utils/color";
+import {
+  BUBBLE_FONT,
+  BUBBLE_ROW,
+  BUBBLE_PADDING,
+  ASSISTANT_NAME,
+  TIMESTAMP_ASSISTANT,
+  TIMESTAMP_USER,
+  ERROR_BUBBLE,
+  ERROR_TEXT,
+} from "../bubbleStyles";
 
 const ThoughtBubble = ({ thought }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -63,10 +74,15 @@ const HistoricalMessage = forwardRef(
       ?.replace(/<think>[\s\S]*?<\/think>/g, "")
       .trim();
 
+    const msgBg =
+      role === "user"
+        ? embedderSettings.USER_STYLES.msgBg
+        : embedderSettings.ASSISTANT_STYLES.msgBg;
+
     return (
-      <div className="allm-py-[5px]">
+      <div className={BUBBLE_ROW}>
         {role === "assistant" && (
-          <div className="allm-text-[10px] allm-text-gray-400 allm-ml-2 allm-mr-6 allm-mb-2 allm-text-left allm-font-sans">
+          <div className={ASSISTANT_NAME}>
             {embedderSettings.settings.assistantName ||
               "Chat Assistant"}
           </div>
@@ -81,27 +97,24 @@ const HistoricalMessage = forwardRef(
           <div
             style={{
               wordBreak: "break-word",
-              backgroundColor:
-                role === "user"
-                  ? embedderSettings.USER_STYLES.msgBg
-                  : embedderSettings.ASSISTANT_STYLES.msgBg,
+              ...(error ? {} : { backgroundColor: msgBg, color: readableTextColor(msgBg) }),
             }}
-            className={`allm-py-[11px] allm-px-4 allm-flex allm-flex-col allm-font-sans ${
+            className={`${BUBBLE_PADDING} allm-flex allm-flex-col ${BUBBLE_FONT} ${
               error
-                ? "allm-bg-red-200 allm-rounded-lg allm-mr-[37px] allm-ml-[9px]"
+                ? ERROR_BUBBLE
                 : role === "user"
                   ? `${embedderSettings.USER_STYLES.base} allm-anything-llm-user-message`
-                  : `${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message allm-ml-2`
-            } allm-shadow-[0_4px_14px_rgba(0,0,0,0.25)]`}
+                  : `${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message`
+            }`}
           >
             <div className="allm-flex allm-flex-col">
               {error ? (
-                <div className="allm-p-2 allm-rounded-lg allm-bg-red-50 allm-text-red-500">
-                  <span className="allm-inline-block">
-                    <Warning className="allm-h-4 allm-w-4 allm-mb-1 allm-inline-block" />{" "}
+                <div className={ERROR_TEXT}>
+                  <span className="allm-inline-flex allm-items-center allm-gap-x-1.5 allm-font-medium">
+                    <Warning className="allm-h-4 allm-w-4" weight="bold" />
                     Could not respond to message.
                   </span>
-                  <p className="allm-text-xs allm-font-mono allm-mt-2 allm-border-l-2 allm-border-red-500 allm-pl-2 allm-bg-red-300 allm-p-2 allm-rounded-sm">
+                  <p className="allm-text-xs allm-font-mono allm-mt-2 allm-mb-0">
                     {errorMsg || "Server error"}
                   </p>
                 </div>
@@ -126,7 +139,7 @@ const HistoricalMessage = forwardRef(
 
         {sentAt && (
           <div
-            className={`allm-font-sans allm-text-[10px] allm-text-gray-400 allm-mr-6 allm-mt-2 ${role === "user" ? "allm-ml-[54px] allm-text-right" : "allm-ml-2 allm-text-left"}`}
+            className={role === "user" ? TIMESTAMP_USER : TIMESTAMP_ASSISTANT}
           >
             {formatDate(sentAt)}
           </div>

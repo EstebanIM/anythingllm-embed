@@ -7,6 +7,8 @@ const TRANSLATIONS = {
     "message-copied": "کپی شد!",
     "session-id": "شناسه جلسه",
     "email-support": "پشتیبانی ایمیل",
+    "error-title": null,
+    "error-detail": null,
   },
 };
 

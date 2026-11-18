@@ -4,6 +4,7 @@ import renderMarkdown from "@/utils/chat/markdown";
 import { embedderSettings } from "@/main";
 import { formatDate } from "@/utils/date";
 import { readableTextColor } from "@/utils/color";
+import { useTranslation } from "react-i18next";
 import {
   BUBBLE_FONT,
   BUBBLE_ROW,
@@ -66,6 +67,7 @@ const ThoughtBubble = ({ thought }) => {
 
 const PromptReply = forwardRef(
   ({ uuid, reply, pending, error, sources = [], sentAt }, ref) => {
+    const { t } = useTranslation();
     if (!reply && sources.length === 0 && !pending && !error) return null;
     if (error) console.error(`ANYTHING_LLM_CHAT_WIDGET_ERROR: ${error}`);
 
@@ -130,10 +132,10 @@ const PromptReply = forwardRef(
               <div className={ERROR_TEXT}>
                 <span className="allm-inline-flex allm-items-center allm-gap-x-1.5 allm-font-medium">
                   <Warning className="allm-h-4 allm-w-4" weight="bold" />
-                  Could not respond to message.
+                  {t("chat.error-title")}
                 </span>
                 <p className="allm-text-xs allm-font-mono allm-mt-2 allm-mb-0">
-                  Server error
+                  {t("chat.error-detail")}
                 </p>
               </div>
             </div>

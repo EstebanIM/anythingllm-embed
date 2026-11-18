@@ -7,6 +7,8 @@ const TRANSLATIONS = {
     "message-copied": "Kopyalandı!",
     "session-id": "Oturum Kimliği",
     "email-support": "E-posta desteği",
+    "error-title": null,
+    "error-detail": null,
   },
 };
 

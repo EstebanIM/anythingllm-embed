@@ -7,6 +7,8 @@ const TRANSLATIONS = {
     "message-copied": "Kopiert!",
     "session-id": "Sitzung ID",
     "email-support": "EMail Support",
+    "error-title": null,
+    "error-detail": null,
   },
 };
 

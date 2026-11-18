@@ -6,6 +6,7 @@ import { embedderSettings } from "@/main";
 import { v4 } from "uuid";
 import { formatDate } from "@/utils/date";
 import { readableTextColor } from "@/utils/color";
+import { useTranslation } from "react-i18next";
 import {
   BUBBLE_FONT,
   BUBBLE_ROW,
@@ -74,6 +75,7 @@ const HistoricalMessage = forwardRef(
       ?.replace(/<think>[\s\S]*?<\/think>/g, "")
       .trim();
 
+    const { t } = useTranslation();
     const msgBg =
       role === "user"
         ? embedderSettings.USER_STYLES.msgBg
@@ -112,10 +114,10 @@ const HistoricalMessage = forwardRef(
                 <div className={ERROR_TEXT}>
                   <span className="allm-inline-flex allm-items-center allm-gap-x-1.5 allm-font-medium">
                     <Warning className="allm-h-4 allm-w-4" weight="bold" />
-                    Could not respond to message.
+                    {t("chat.error-title")}
                   </span>
                   <p className="allm-text-xs allm-font-mono allm-mt-2 allm-mb-0">
-                    {errorMsg || "Server error"}
+                    {errorMsg || t("chat.error-detail")}
                   </p>
                 </div>
               ) : (

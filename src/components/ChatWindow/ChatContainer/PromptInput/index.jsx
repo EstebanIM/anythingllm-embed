@@ -120,13 +120,10 @@ export default function PromptInput({
             <span className="allm-sr-only">Send message</span>
           </button>
         </div>
-        {/* Credit line. The dot is a 3px separator, quieter than a bullet. */}
+        {/* Credit line, separated by a middle dot (·). */}
         <p className="allm-m-0 allm-mt-2 allm-flex allm-items-center allm-justify-center allm-gap-x-[6px] allm-font-[family-name:inherit] allm-text-[11px] allm-leading-4 allm-text-[#5F6368]">
           <span>IASMAR</span>
-          <span
-            aria-hidden="true"
-            className="allm-inline-block allm-w-[3px] allm-h-[3px] allm-rounded-full allm-bg-[#5F6368] allm-opacity-60"
-          />
+          <span aria-hidden="true">·</span>
           <span>{t("chat.built-by")} C-766</span>
         </p>
       </form>

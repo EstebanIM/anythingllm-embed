@@ -40,7 +40,17 @@ export default function OpenButton({ settings, isOpen, toggleOpen }) {
       className="hover:allm-cursor-pointer allm-border-none allm-flex allm-items-center allm-justify-center allm-min-w-[52px] allm-h-[52px] allm-px-[14px] allm-py-0 allm-box-border allm-rounded-full allm-font-[family-name:inherit] allm-text-[15px] allm-font-normal allm-leading-5 focus-visible:allm-outline focus-visible:allm-outline-2 focus-visible:allm-outline-offset-2 focus-visible:allm-outline-[#1A73E8]"
       aria-label={label}
     >
-      <span className="allm-launcher-label" aria-hidden="true">
+      <span
+        className="allm-launcher-label"
+        aria-hidden="true"
+        // Measured width the pill animates to (see Head.jsx).
+        ref={(el) =>
+          el?.style.setProperty(
+            "--allm-label-w",
+            `${Math.ceil(el.scrollWidth) + 2}px`
+          )
+        }
+      >
         {label}
       </span>
       <ChatIcon size={24} aria-hidden="true" />

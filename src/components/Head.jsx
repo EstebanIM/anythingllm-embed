@@ -143,24 +143,63 @@ const customCss = `
 
   /* Launcher: on hover or keyboard focus it opens toward the page and shows
      its label, so the icon alone is never the only explanation. */
+  /* The pill grows to the label's measured width (--allm-label-w), so the
+     motion lasts its whole duration instead of stopping early. The text
+     fades in a beat after the pill starts opening and leaves quickly. */
   #anything-llm-embed-chat-button .allm-launcher-label {
     max-width: 0;
     opacity: 0;
+    transform: translateX(6px);
     overflow: hidden;
     white-space: nowrap;
-    transition: max-width 220ms cubic-bezier(0.2, 0, 0, 1),
-      opacity 160ms cubic-bezier(0.2, 0, 0, 1), margin 220ms cubic-bezier(0.2, 0, 0, 1);
+    transition: max-width 360ms cubic-bezier(0.2, 0, 0, 1),
+      margin 360ms cubic-bezier(0.2, 0, 0, 1),
+      transform 360ms cubic-bezier(0.2, 0, 0, 1),
+      opacity 120ms ease-out;
   }
   #anything-llm-embed-chat-button:hover .allm-launcher-label,
   #anything-llm-embed-chat-button:focus-visible .allm-launcher-label {
-    max-width: 240px;
+    max-width: var(--allm-label-w, 240px);
     opacity: 1;
-    margin-inline: 6px 2px;
+    transform: none;
+    margin-inline: 6px 12px;
+    transition: max-width 360ms cubic-bezier(0.2, 0, 0, 1),
+      margin 360ms cubic-bezier(0.2, 0, 0, 1),
+      transform 360ms cubic-bezier(0.2, 0, 0, 1),
+      opacity 240ms ease-out 80ms;
+  }
+
+  /* Options menu: a quick fade and drop from the ⋮ button. */
+  @keyframes allm-menu-in {
+    from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+  .allm-menu-enter {
+    transform-origin: top right;
+    animation: allm-menu-in 160ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  /* Header icon buttons: 44px hit area, 32px round chip that tints on
+     hover and stays tinted while its menu is open. */
+  .allm-header-btn .allm-chip {
+    transition: background-color 120ms ease-out, color 120ms ease-out;
+  }
+  .allm-header-btn:hover .allm-chip,
+  .allm-header-btn[aria-expanded="true"] .allm-chip {
+    background-color: #F4F5F6;
+    color: #1B2A41;
+  }
+  .allm-header-btn:focus-visible .allm-chip {
+    outline: 2px solid #1A73E8;
+    outline-offset: 1px;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .allm-chat-enter { animation: none; }
-    #anything-llm-embed-chat-button .allm-launcher-label { transition: none; }
+    .allm-chat-enter, .allm-menu-enter { animation: none; }
+    #anything-llm-embed-chat-button .allm-launcher-label,
+    #anything-llm-embed-chat-button:hover .allm-launcher-label,
+    #anything-llm-embed-chat-button:focus-visible .allm-launcher-label,
+    .allm-header-btn .allm-chip { transition: none; }
   }
 `;
 

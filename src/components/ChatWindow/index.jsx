@@ -44,7 +44,7 @@ export default function ChatWindow({ closeChat, settings, sessionId }) {
           setChatHistory={setChatHistory}
         />
       )}
-      <div className="allm-flex-grow allm-overflow-y-auto">
+      <div className="allm-flex-grow allm-min-h-0 allm-overflow-y-auto">
         <ChatContainer
           sessionId={sessionId}
           settings={settings}

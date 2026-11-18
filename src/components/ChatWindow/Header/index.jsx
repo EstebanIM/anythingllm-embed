@@ -10,9 +10,17 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-// 44px touch target, Portal grey icon, visible keyboard focus.
+// 44px touch target around a 32px round chip; hover tint, open state and
+// keyboard focus are drawn on the chip (Head.jsx).
 const HEADER_BUTTON =
-  "allm-w-[44px] allm-h-[44px] allm-flex allm-items-center allm-justify-center allm-bg-transparent allm-border-none allm-rounded-lg allm-text-[#5F6368] hover:allm-cursor-pointer hover:allm-bg-[#F4F5F6] focus-visible:allm-outline focus-visible:allm-outline-2 focus-visible:allm-outline-[#1A73E8]";
+  "allm-header-btn allm-w-[44px] allm-h-[44px] allm-p-0 allm-flex allm-items-center allm-justify-center allm-bg-transparent allm-border-none hover:allm-cursor-pointer focus-visible:allm-outline-none";
+const HEADER_CHIP =
+  "allm-chip allm-w-8 allm-h-8 allm-rounded-full allm-flex allm-items-center allm-justify-center allm-text-[#5F6368]";
+
+const MENU_ICON = "allm-flex-none allm-text-[#5F6368]";
+// Options menu rows: Portal text sizes, regular weight, grey icons.
+const MENU_ITEM =
+  "allm-w-full allm-h-10 allm-px-3 allm-flex allm-items-center allm-gap-x-[10px] allm-bg-white allm-border-none allm-rounded-lg allm-text-[14px] allm-font-normal allm-text-[#1B2A41] allm-no-underline allm-font-[family-name:inherit] allm-whitespace-nowrap hover:allm-cursor-pointer hover:allm-bg-[#F4F5F6] focus-visible:allm-outline focus-visible:allm-outline-2 focus-visible:allm-outline-[#1A73E8]";
 
 export default function ChatWindowHeader({
   sessionId,
@@ -50,7 +58,7 @@ export default function ChatWindowHeader({
   return (
     <div
       style={{ borderBottom: "1px solid #E3E5E8" }}
-      className="allm-flex allm-items-center allm-gap-x-1 allm-relative allm-rounded-t-2xl allm-h-[56px] allm-box-border allm-pl-4 allm-pr-[6px] allm-font-[family-name:inherit]"
+      className="allm-flex allm-flex-none allm-items-center allm-gap-x-1 allm-relative allm-rounded-t-2xl allm-h-[56px] allm-box-border allm-pl-4 allm-pr-[10px] allm-font-[family-name:inherit]"
       id="anything-llm-header"
     >
       {/* Platform logo only when one was uploaded (no AnythingLLM fallback). */}
@@ -73,8 +81,12 @@ export default function ChatWindowHeader({
             onClick={() => setShowOptions(!showingOptions)}
             className={HEADER_BUTTON}
             aria-label="Options"
+            aria-haspopup="menu"
+            aria-expanded={showingOptions}
           >
-            <EllipsisVertical size={20} />
+            <span className={HEADER_CHIP}>
+              <EllipsisVertical size={20} />
+            </span>
           </button>
         )}
         <button
@@ -83,7 +95,9 @@ export default function ChatWindowHeader({
           className={HEADER_BUTTON}
           aria-label="Close"
         >
-          <X size={20} />
+          <span className={HEADER_CHIP}>
+            <X size={20} />
+          </span>
         </button>
       </div>
       <OptionsMenu
@@ -104,14 +118,11 @@ function OptionsMenu({ settings, showing, resetChat, sessionId, menuRef }) {
   return (
     <div
       ref={menuRef}
-      className="allm-bg-white allm-absolute allm-z-10 allm-flex allm-flex-col allm-gap-y-1 allm-rounded-xl allm-shadow-lg allm-top-[60px] allm-right-[46px]"
+      className="allm-menu-enter allm-bg-white allm-absolute allm-z-10 allm-flex allm-flex-col allm-p-1 allm-box-border allm-rounded-xl allm-border allm-border-solid allm-border-[#E3E5E8] allm-shadow-[0_8px_24px_rgba(8,36,63,0.12)] allm-top-[60px] allm-right-[60px]"
     >
-      <button
-        onClick={resetChat}
-        className="hover:allm-cursor-pointer allm-bg-white allm-gap-x-[12px] hover:allm-bg-gray-100 allm-rounded-lg allm-border-none allm-flex allm-items-center allm-text-base allm-text-[#7A7D7E] allm-font-bold allm-px-4"
-      >
-        <RotateCcw size={24} />
-        <p className="allm-text-[14px]">{t("chat.reset-chat")}</p>
+      <button onClick={resetChat} className={MENU_ITEM}>
+        <RotateCcw size={18} className={MENU_ICON} />
+        <span>{t("chat.reset-chat")}</span>
       </button>
       <ContactSupport email={settings.supportEmail} />
       <SessionID sessionId={sessionId} />
@@ -132,22 +143,17 @@ function SessionID({ sessionId }) {
 
   if (sessionIdCopied) {
     return (
-      <div className="hover:allm-cursor-pointer allm-bg-white allm-gap-x-[12px] hover:allm-bg-gray-100 allm-rounded-lg allm-border-none allm-flex allm-items-center allm-text-base allm-text-[#7A7D7E] allm-font-bold allm-px-4">
-        <Check size={24} />
-        <p className="allm-text-[14px] allm-font-sans">
-          {t("chat.message-copied")}
-        </p>
+      <div className={MENU_ITEM} role="status">
+        <Check size={18} className={MENU_ICON} />
+        <span>{t("chat.message-copied")}</span>
       </div>
     );
   }
 
   return (
-    <button
-      onClick={copySessionId}
-      className="hover:allm-cursor-pointer allm-bg-white allm-gap-x-[12px] hover:allm-bg-gray-100 allm-rounded-lg allm-border-none allm-flex allm-items-center allm-text-base allm-text-[#7A7D7E] allm-font-bold allm-px-4"
-    >
-      <Copy size={24} />
-      <p className="allm-text-[14px]">{t("chat.session-id")}</p>
+    <button onClick={copySessionId} className={MENU_ITEM}>
+      <Copy size={18} className={MENU_ICON} />
+      <span>{t("chat.session-id")}</span>
     </button>
   );
 }
@@ -159,12 +165,10 @@ function ContactSupport({ email = null }) {
   return (
     <a
       href={`mailto:${email}?Subject=${encodeURIComponent(subject)}`}
-      className="allm-no-underline hover:allm-underline hover:allm-cursor-pointer allm-bg-white allm-gap-x-[12px] hover:allm-bg-gray-100 allm-rounded-lg allm-border-none allm-flex allm-items-center allm-text-base allm-text-[#7A7D7E] allm-font-bold allm-px-4"
+      className={`${MENU_ITEM} allm-box-border`}
     >
-      <Mail size={24} />
-      <p className="allm-text-[14px] allm-font-sans">
-        {t("chat.email-support")}
-      </p>
+      <Mail size={18} className={MENU_ICON} />
+      <span>{t("chat.email-support")}</span>
     </a>
   );
 }

@@ -49,3 +49,7 @@ Dirección: `C:\Portal GC\docs\design-system.md`. Antislop en modo "durante". Le
 - Apertura: la ventana aparece con un fundido y una subida de 16 px y escala desde 96 % desde la esquina del botón, 240 ms con la curva del Portal `cubic-bezier(0.2, 0, 0, 1)`. Nada se anima con `prefers-reduced-motion`.
 - Botón cerrado: al pasar el mouse o con foco de teclado se abre hacia la página mostrando "Chatea con el experto" (15 px, peso 400) antes del icono. El mismo texto es su `aria-label`. En pantallas táctiles queda como círculo.
 - Crédito bajo el campo: "IASMAR · Desarrollado por C-766" en 11 px `#5F6368`, con un punto de 3 px como separador.
+- Hover del botón cerrado más suave: la píldora crece hasta el ancho medido del texto en 360 ms y el texto aparece 80 ms después; 12 px entre texto e icono.
+- Menú ⋮: aparece con fundido y caída de 4 px en 160 ms; filas de 40 px en 14 px peso 400 navy con iconos de 18 px grises; borde y sombra como la ventana.
+- Botones ⋮ y ×: área de 44 px con un círculo de 32 px que se tiñe `#F4F5F6` al pasar el mouse (y el ⋮ mientras su menú está abierto); 16 px de aire a la derecha, igual que a la izquierda del nombre.
+- La cabecera no se encoge con conversaciones largas (`flex-none`).

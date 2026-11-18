@@ -1,12 +1,12 @@
 import ChatService from "@/models/chatService";
 import {
-  ArrowCounterClockwise,
+  RotateCcw,
   Check,
   Copy,
-  DotsThreeOutlineVertical,
-  Envelope,
+  EllipsisVertical,
+  Mail,
   X,
-} from "@phosphor-icons/react";
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -67,7 +67,7 @@ export default function ChatWindowHeader({
             className="allm-bg-transparent hover:allm-cursor-pointer allm-border-none hover:allm-bg-gray-100 allm-rounded-sm allm-text-slate-800/60"
             aria-label="Options"
           >
-            <DotsThreeOutlineVertical size={20} weight="fill" />
+            <EllipsisVertical size={20} />
           </button>
         )}
         <button
@@ -76,7 +76,7 @@ export default function ChatWindowHeader({
           className="allm-bg-transparent hover:allm-cursor-pointer allm-border-none hover:allm-bg-gray-100 allm-rounded-sm allm-text-slate-800/60"
           aria-label="Close"
         >
-          <X size={20} weight="bold" />
+          <X size={20} />
         </button>
       </div>
       <OptionsMenu
@@ -103,7 +103,7 @@ function OptionsMenu({ settings, showing, resetChat, sessionId, menuRef }) {
         onClick={resetChat}
         className="hover:allm-cursor-pointer allm-bg-white allm-gap-x-[12px] hover:allm-bg-gray-100 allm-rounded-lg allm-border-none allm-flex allm-items-center allm-text-base allm-text-[#7A7D7E] allm-font-bold allm-px-4"
       >
-        <ArrowCounterClockwise size={24} />
+        <RotateCcw size={24} />
         <p className="allm-text-[14px]">{t("chat.reset-chat")}</p>
       </button>
       <ContactSupport email={settings.supportEmail} />
@@ -154,7 +154,7 @@ function ContactSupport({ email = null }) {
       href={`mailto:${email}?Subject=${encodeURIComponent(subject)}`}
       className="allm-no-underline hover:allm-underline hover:allm-cursor-pointer allm-bg-white allm-gap-x-[12px] hover:allm-bg-gray-100 allm-rounded-lg allm-border-none allm-flex allm-items-center allm-text-base allm-text-[#7A7D7E] allm-font-bold allm-px-4"
     >
-      <Envelope size={24} />
+      <Mail size={24} />
       <p className="allm-text-[14px] allm-font-sans">
         {t("chat.email-support")}
       </p>

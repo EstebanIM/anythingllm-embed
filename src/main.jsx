@@ -19,12 +19,13 @@ export const embedderSettings = {
   USER_STYLES: {
     // Defaults follow the Portal GC palette. Text color is not set here: the
     // bubbles derive it from msgBg (utils/color.js) so any brand stays legible.
+    // Corners depend on the line count (utils/bubbleShape.js).
     msgBg: scriptSettings?.userBgColor ?? "#1A73E8",
-    base: `allm-rounded-t-[16px] allm-rounded-bl-[16px] allm-rounded-br-[6px] allm-ml-[48px] allm-mr-3`,
+    base: `allm-ml-[48px] allm-mr-3`,
   },
   ASSISTANT_STYLES: {
     msgBg: scriptSettings?.assistantBgColor ?? "#F4F5F6",
-    base: `allm-rounded-t-[16px] allm-rounded-br-[16px] allm-rounded-bl-[6px] allm-mr-[48px] allm-ml-3`,
+    base: `allm-mr-[48px] allm-ml-3`,
   },
 };
 

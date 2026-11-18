@@ -1,7 +1,7 @@
 import HistoricalMessage from "./HistoricalMessage";
 import PromptReply from "./PromptReply";
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, CircleNotch } from "@phosphor-icons/react";
+import { ArrowDown, LoaderCircle } from "lucide-react";
 import { embedderSettings } from "@/main";
 import debounce from "lodash.debounce";
 import { SEND_TEXT_EVENT } from "..";
@@ -107,7 +107,6 @@ export default function ChatHistory({ settings = {}, history = [] }) {
           <div className="allm-flex allm-flex-col allm-items-center">
             <div className="allm-rounded-full allm-border allm-border-white/10 allm-bg-black/20 hover:allm-bg-black/50 allm-w-8 allm-h-8 allm-flex allm-items-center allm-justify-center">
               <ArrowDown
-                weight="bold"
                 className="allm-text-white/50 allm-w-4 allm-h-4"
                 onClick={scrollToBottom}
                 id="scroll-to-bottom-button"
@@ -126,7 +125,7 @@ export function ChatHistoryLoading() {
     <div className="allm-h-full allm-w-full allm-relative">
       <div className="allm-h-full allm-max-h-[82vh] allm-pb-[100px] allm-pt-[5px] allm-bg-gray-100 allm-rounded-lg allm-px-2 allm-h-full allm-mt-2 allm-gap-y-2 allm-overflow-y-scroll allm-flex allm-flex-col allm-justify-start allm-no-scroll">
         <div className="allm-flex allm-h-full allm-flex-col allm-items-center allm-justify-center">
-          <CircleNotch
+          <LoaderCircle
             size={14}
             className="allm-text-slate-400 allm-animate-spin"
           />

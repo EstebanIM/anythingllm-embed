@@ -1,5 +1,7 @@
 import React, { memo, forwardRef, useState } from "react";
-import { Warning, CaretDown } from "@phosphor-icons/react";
+import { TriangleAlert, ChevronDown } from "lucide-react";
+import useSingleLine from "@/hooks/useSingleLine";
+import { bubbleRadiusClass } from "@/utils/bubbleShape";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
 import { embedderSettings } from "@/main";
@@ -28,9 +30,8 @@ const ThoughtBubble = ({ thought }) => {
         onClick={() => setIsExpanded(!isExpanded)}
         className="allm-cursor-pointer allm-flex allm-items-center allm-gap-x-1.5 allm-text-gray-400 hover:allm-text-gray-500"
       >
-        <CaretDown
+        <ChevronDown
           size={14}
-          weight="bold"
           className={`allm-transition-transform ${isExpanded ? "allm-rotate-180" : ""}`}
         />
         <span className="allm-text-xs allm-font-medium">View thoughts</span>
@@ -76,6 +77,7 @@ const HistoricalMessage = forwardRef(
       .trim();
 
     const { t } = useTranslation();
+    const [bubbleRef, singleLine] = useSingleLine();
     const msgBg =
       role === "user"
         ? embedderSettings.USER_STYLES.msgBg
@@ -96,6 +98,7 @@ const HistoricalMessage = forwardRef(
           }`}
         >
           <div
+            ref={bubbleRef}
             style={{
               wordBreak: "break-word",
               ...(error ? {} : bubbleColorStyle(msgBg)),
@@ -103,16 +106,21 @@ const HistoricalMessage = forwardRef(
             className={`${BUBBLE_PADDING} allm-flex allm-flex-col ${BUBBLE_FONT} ${
               error
                 ? ERROR_BUBBLE
-                : role === "user"
-                  ? `${embedderSettings.USER_STYLES.base} allm-anything-llm-user-message`
-                  : `${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message`
+                : `${bubbleRadiusClass(role, singleLine)} ${
+                    role === "user"
+                      ? `${embedderSettings.USER_STYLES.base} allm-anything-llm-user-message`
+                      : `${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message`
+                  }`
             }`}
           >
-            <div className="allm-flex allm-flex-col">
+            <div
+              data-bubble-content
+              className="allm-flex allm-flex-col allm-leading-[20px]"
+            >
               {error ? (
                 <div className={ERROR_TEXT}>
                   <span className="allm-inline-flex allm-items-center allm-gap-x-1.5 allm-font-medium">
-                    <Warning className="allm-h-4 allm-w-4" weight="bold" />
+                    <TriangleAlert className="allm-h-4 allm-w-4" />
                     {t("chat.error-title")}
                   </span>
                   <p className="allm-text-xs allm-font-mono allm-mt-2 allm-mb-0">

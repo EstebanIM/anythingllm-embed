@@ -1,4 +1,4 @@
-import { CircleNotch, PaperPlaneRight } from "@phosphor-icons/react";
+import { LoaderCircle, SendHorizontal } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -87,12 +87,11 @@ export default function PromptInput({
                 aria-label="Send message"
               >
                 {buttonDisabled ? (
-                  <CircleNotch className="allm-w-4 allm-h-4 allm-animate-spin" />
+                  <LoaderCircle className="allm-w-4 allm-h-4 allm-animate-spin" />
                 ) : (
-                  <PaperPlaneRight
+                  <SendHorizontal
                     size={24}
                     className="allm-my-3 allm-text-[#22262899]/60 group-hover:allm-text-[#22262899]/90"
-                    weight="fill"
                   />
                 )}
                 <span className="allm-sr-only">Send message</span>

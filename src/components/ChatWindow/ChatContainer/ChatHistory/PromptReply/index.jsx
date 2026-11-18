@@ -1,5 +1,7 @@
 import { forwardRef, memo, useState } from "react";
-import { Warning, CircleNotch, CaretDown } from "@phosphor-icons/react";
+import { TriangleAlert, LoaderCircle, ChevronDown } from "lucide-react";
+import useSingleLine from "@/hooks/useSingleLine";
+import { bubbleRadiusClass } from "@/utils/bubbleShape";
 import renderMarkdown from "@/utils/chat/markdown";
 import { embedderSettings } from "@/main";
 import { formatDate } from "@/utils/date";
@@ -19,14 +21,16 @@ const assistantBubbleStyle = () => ({
   wordBreak: "break-word",
   ...bubbleColorStyle(embedderSettings.ASSISTANT_STYLES.msgBg),
 });
-const assistantBubbleClass = () =>
-  `${BUBBLE_PADDING} allm-flex allm-flex-col ${BUBBLE_FONT} ${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message`;
+const assistantBubbleClass = (singleLine) =>
+  `${BUBBLE_PADDING} allm-flex allm-flex-col ${BUBBLE_FONT} ${bubbleRadiusClass("assistant", singleLine)} ${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message`;
+// The measured box: text and typing indicator share one line height.
+const CONTENT = "allm-flex allm-flex-col allm-leading-[20px]";
 
 const ThinkingIndicator = ({ hasThought }) => {
   if (hasThought) {
     return (
       <div className="allm-flex allm-items-center allm-gap-x-2 allm-text-gray-500">
-        <CircleNotch size={16} className="allm-animate-spin" />
+        <LoaderCircle size={16} className="allm-animate-spin" />
         <span className="allm-text-sm">Thinking...</span>
       </div>
     );
@@ -46,9 +50,8 @@ const ThoughtBubble = ({ thought }) => {
         onClick={() => setIsExpanded(!isExpanded)}
         className="allm-cursor-pointer allm-flex allm-items-center allm-gap-x-1.5 allm-text-gray-400 hover:allm-text-gray-500"
       >
-        <CaretDown
+        <ChevronDown
           size={14}
-          weight="bold"
           className={`allm-transition-transform ${isExpanded ? "allm-rotate-180" : ""}`}
         />
         <span className="allm-text-xs allm-font-medium">View thoughts</span>
@@ -67,6 +70,7 @@ const ThoughtBubble = ({ thought }) => {
 const PromptReply = forwardRef(
   ({ uuid, reply, pending, error, sources = [], sentAt }, ref) => {
     const { t } = useTranslation();
+    const [bubbleRef, singleLine] = useSingleLine();
     if (!reply && sources.length === 0 && !pending && !error) return null;
     if (error) console.error(`ANYTHING_LLM_CHAT_WIDGET_ERROR: ${error}`);
 
@@ -106,13 +110,16 @@ const PromptReply = forwardRef(
           </div>
           <div className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start">
             <div
+              ref={bubbleRef}
               style={assistantBubbleStyle()}
-              className={assistantBubbleClass()}
+              className={assistantBubbleClass(singleLine)}
             >
-              {hasIncompleteThinkTag && streamingThought && (
-                <ThoughtBubble thought={streamingThought} />
-              )}
-              <ThinkingIndicator hasThought={hasIncompleteThinkTag} />
+              <div data-bubble-content className={CONTENT}>
+                {hasIncompleteThinkTag && streamingThought && (
+                  <ThoughtBubble thought={streamingThought} />
+                )}
+                <ThinkingIndicator hasThought={hasIncompleteThinkTag} />
+              </div>
             </div>
           </div>
         </div>
@@ -131,7 +138,7 @@ const PromptReply = forwardRef(
             >
               <div className={ERROR_TEXT}>
                 <span className="allm-inline-flex allm-items-center allm-gap-x-1.5 allm-font-medium">
-                  <Warning className="allm-h-4 allm-w-4" weight="bold" />
+                  <TriangleAlert className="allm-h-4 allm-w-4" />
                   {t("chat.error-title")}
                 </span>
                 <p className="allm-text-xs allm-font-mono allm-mt-2 allm-mb-0">
@@ -155,19 +162,22 @@ const PromptReply = forwardRef(
           className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start"
         >
           <div
+            ref={bubbleRef}
             style={assistantBubbleStyle()}
-            className={assistantBubbleClass()}
+            className={assistantBubbleClass(singleLine)}
           >
-            {thoughts.length > 0 && (
-              <ThoughtBubble thought={thoughts.join("\n\n")} />
-            )}
-            <div className="allm-flex allm-gap-x-5">
-              <span
-                className="allm-reply allm-whitespace-pre-line allm-font-normal allm-text-sm allm-md:text-sm allm-flex allm-flex-col allm-gap-y-1"
-                dangerouslySetInnerHTML={{
-                  __html: renderMarkdown(responseContent || ""),
-                }}
-              />
+            <div data-bubble-content className={CONTENT}>
+              {thoughts.length > 0 && (
+                <ThoughtBubble thought={thoughts.join("\n\n")} />
+              )}
+              <div className="allm-flex allm-gap-x-5">
+                <span
+                  className="allm-reply allm-whitespace-pre-line allm-font-normal allm-text-sm allm-md:text-sm allm-flex allm-flex-col allm-gap-y-1"
+                  dangerouslySetInnerHTML={{
+                    __html: renderMarkdown(responseContent || ""),
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

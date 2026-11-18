@@ -1,5 +1,5 @@
 import useCopyText from "@/hooks/useCopyText";
-import { Check, ClipboardText } from "@phosphor-icons/react";
+import { Check, Copy } from "lucide-react";
 import { memo } from "react";
 import { Tooltip } from "react-tooltip";
 
@@ -26,7 +26,7 @@ function CopyMessage({ message }) {
           {copied ? (
             <Check size={18} className="allm-mb-1" />
           ) : (
-            <ClipboardText size={18} className="allm-mb-1" />
+            <Copy size={18} className="allm-mb-1" />
           )}
         </button>
       </div>

@@ -66,3 +66,8 @@ Los valores por defecto del widget pasan a ser los del Portal, así el widget se
 
 - Servidor de prueba y preview con los atributos reales del Portal: `C:\iasmar\dev-tools\mock-embed-server.mjs`, `embed/preview.html`.
 - La preview hoy manda `#1B2B44`; tras el cambio del Portal, mandará `#F4F5F6` (o nada). Verificar con ambos.
+
+## Ajuste del 2026-11-18 (pedido del usuario)
+
+- Globos de una línea: píldora completa (`allm-rounded-full`), sin cola. Desde la segunda línea, radio 16 px con cola de 6 px hacia quien habla. Se mide el contenido con `ResizeObserver`, así que una respuesta en streaming pasa de píldora a globo al saltar de línea (`src/utils/bubbleShape.js`, `src/hooks/useSingleLine.js`).
+- Iconos: todo el widget usa Lucide (`lucide-react` 1.67.0, verificado contra jsDelivr) con trazo 1,5, el mismo del Portal GC, fijado una vez con `LucideProvider` en `App.jsx`. Se retira `@phosphor-icons/react`. Las claves públicas de `data-chat-icon` no cambian.

@@ -48,7 +48,7 @@ export default function App() {
               maxHeight: windowHeight,
               height: "100%",
             }}
-            className={`allm-h-full allm-w-full allm-bg-white allm-fixed allm-bottom-0 allm-right-0 allm-mb-4 allm-md:mr-4 allm-rounded-2xl allm-border allm-border-gray-300 allm-shadow-[0_4px_14px_rgba(0,0,0,0.25)] allm-flex allm-flex-col ${positionClasses[position]}`}
+            className={`allm-h-full allm-w-full allm-bg-white allm-fixed allm-bottom-0 allm-right-0 allm-mb-4 allm-md:mr-4 allm-rounded-2xl allm-border allm-border-solid allm-border-[#E3E5E8] allm-shadow-[0_8px_24px_rgba(8,36,63,0.12)] allm-flex allm-flex-col ${positionClasses[position]}`}
             id="anything-llm-chat"
           >
             {isChatOpen && (

@@ -10,6 +10,10 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+// 44px touch target, Portal grey icon, visible keyboard focus.
+const HEADER_BUTTON =
+  "allm-w-[44px] allm-h-[44px] allm-flex allm-items-center allm-justify-center allm-bg-transparent allm-border-none allm-rounded-lg allm-text-[#5F6368] hover:allm-cursor-pointer hover:allm-bg-[#F4F5F6] focus-visible:allm-outline focus-visible:allm-outline-2 focus-visible:allm-outline-[#1A73E8]";
+
 export default function ChatWindowHeader({
   sessionId,
   settings = {},
@@ -45,26 +49,29 @@ export default function ChatWindowHeader({
 
   return (
     <div
-      style={{ borderBottom: "1px solid #E9E9E9" }}
-      className="allm-flex allm-items-center allm-relative allm-rounded-t-2xl"
+      style={{ borderBottom: "1px solid #E3E5E8" }}
+      className="allm-flex allm-items-center allm-gap-x-1 allm-relative allm-rounded-t-2xl allm-h-[56px] allm-box-border allm-pl-4 allm-pr-[6px] allm-font-[family-name:inherit]"
       id="anything-llm-header"
     >
-      <div className="allm-flex allm-justify-center allm-items-center allm-w-full allm-h-[76px]">
-        {iconUrl && (
-          <img
-            style={{ maxWidth: 48, maxHeight: 48 }}
-            src={iconUrl}
-            alt="Logo"
-          />
-        )}
-      </div>
-      <div className="allm-absolute allm-right-0 allm-flex allm-gap-x-1 allm-items-center allm-px-[22px]">
+      {/* Platform logo only when one was uploaded (no AnythingLLM fallback). */}
+      {iconUrl && (
+        <img
+          style={{ maxHeight: 24, maxWidth: 72 }}
+          className="allm-mr-1"
+          src={iconUrl}
+          alt=""
+        />
+      )}
+      <p className="allm-m-0 allm-flex-1 allm-min-w-0 allm-truncate allm-text-[14px] allm-font-semibold allm-text-[#1B2A41]">
+        {settings.assistantName || "Chat Assistant"}
+      </p>
+      <div className="allm-flex allm-items-center allm-flex-none">
         {settings.loaded && (
           <button
             ref={buttonRef}
             type="button"
             onClick={() => setShowOptions(!showingOptions)}
-            className="allm-bg-transparent hover:allm-cursor-pointer allm-border-none hover:allm-bg-gray-100 allm-rounded-sm allm-text-slate-800/60"
+            className={HEADER_BUTTON}
             aria-label="Options"
           >
             <EllipsisVertical size={20} />
@@ -73,7 +80,7 @@ export default function ChatWindowHeader({
         <button
           type="button"
           onClick={closeChat}
-          className="allm-bg-transparent hover:allm-cursor-pointer allm-border-none hover:allm-bg-gray-100 allm-rounded-sm allm-text-slate-800/60"
+          className={HEADER_BUTTON}
           aria-label="Close"
         >
           <X size={20} />
@@ -97,7 +104,7 @@ function OptionsMenu({ settings, showing, resetChat, sessionId, menuRef }) {
   return (
     <div
       ref={menuRef}
-      className="allm-bg-white allm-absolute allm-z-10 allm-flex allm-flex-col allm-gap-y-1 allm-rounded-xl allm-shadow-lg allm-top-[64px] allm-right-[46px]"
+      className="allm-bg-white allm-absolute allm-z-10 allm-flex allm-flex-col allm-gap-y-1 allm-rounded-xl allm-shadow-lg allm-top-[60px] allm-right-[46px]"
     >
       <button
         onClick={resetChat}

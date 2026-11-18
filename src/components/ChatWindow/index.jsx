@@ -51,15 +51,21 @@ export default function ChatWindow({ closeChat, settings, sessionId }) {
           knownHistory={chatHistory}
         />
       </div>
-      <div className="allm-mt-4 allm-pb-4 allm-h-fit allm-gap-y-2 allm-z-10">
-        <Sponsor settings={settings} />
-        <ResetChat
-          setChatHistory={setChatHistory}
-          settings={settings}
-          sessionId={sessionId}
-          closeChat={closeChat}
-        />
-      </div>
+      {/* With a header, reset lives in its ⋮ menu; without one, this row is
+          the only way to reset or close, so it stays. */}
+      {(settings.noHeader || !settings.noSponsor) && (
+        <div className="allm-mt-2 allm-pb-4 allm-h-fit allm-gap-y-2 allm-z-10">
+          <Sponsor settings={settings} />
+          {settings.noHeader && (
+            <ResetChat
+              setChatHistory={setChatHistory}
+              settings={settings}
+              sessionId={sessionId}
+              closeChat={closeChat}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

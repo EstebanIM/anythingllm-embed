@@ -130,6 +130,38 @@ const customCss = `
     color: inherit;
     text-decoration: underline;
   }
+
+  /* Opening the chat: a short fade and lift from the launcher's corner, so
+     the eye follows where the window came from. Portal overlay timing. */
+  @keyframes allm-chat-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+  .allm-chat-enter {
+    animation: allm-chat-in 220ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  /* Launcher: on hover or keyboard focus it opens toward the page and shows
+     its label, so the icon alone is never the only explanation. */
+  #anything-llm-embed-chat-button .allm-launcher-label {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width 220ms cubic-bezier(0.2, 0, 0, 1),
+      opacity 160ms cubic-bezier(0.2, 0, 0, 1), margin 220ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  #anything-llm-embed-chat-button:hover .allm-launcher-label,
+  #anything-llm-embed-chat-button:focus-visible .allm-launcher-label {
+    max-width: 240px;
+    opacity: 1;
+    margin-inline: 6px 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .allm-chat-enter { animation: none; }
+    #anything-llm-embed-chat-button .allm-launcher-label { transition: none; }
+  }
 `;
 
 export default function Head() {

@@ -43,3 +43,9 @@ Dirección: `C:\Portal GC\docs\design-system.md`. Antislop en modo "durante". Le
 
 - El botón Enviar activo usa el color del globo del usuario (la maqueta mostraba `#1A73E8`, que es su valor por defecto), para que siga la marca.
 - Valor por defecto de `buttonColor` pasa de `#262626` a `#1A73E8`.
+
+## Ajuste del 2026-11-18 (pedido del usuario)
+
+- Apertura: la ventana aparece con un fundido y una subida de 8 px desde la esquina del botón, 220 ms con la curva del Portal `cubic-bezier(0.2, 0, 0, 1)`. Nada se anima con `prefers-reduced-motion`.
+- Botón cerrado: al pasar el mouse o con foco de teclado se abre hacia la página mostrando "Chatea con el experto" (15 px, peso 400) antes del icono. El mismo texto es su `aria-label`. En pantallas táctiles queda como círculo.
+- Crédito bajo el campo: "IASMAR · Desarrollado por C-766" en 11 px `#5F6368`, con un punto de 3 px como separador.

@@ -84,7 +84,7 @@ export default function PromptInput({
     <div className="allm-w-full allm-sticky allm-bottom-0 allm-z-10 allm-flex allm-justify-center allm-items-center allm-bg-white">
       <form
         onSubmit={handleSubmit}
-        className="allm-w-full allm-px-3 allm-pt-2 allm-pb-[14px] allm-box-border"
+        className="allm-w-full allm-px-3 allm-pt-2 allm-pb-[10px] allm-box-border"
       >
         <div
           className={`allm-flex allm-items-end allm-gap-x-2 allm-w-full allm-box-border allm-bg-white allm-border allm-border-solid allm-border-[#D5D9DE] allm-py-[6px] allm-pr-[6px] allm-pl-4 focus-within:allm-border-[#1A73E8] focus-within:allm-shadow-[0_0_0_1px_#1A73E8] ${fieldRadiusClass(singleLine)}`}
@@ -120,6 +120,15 @@ export default function PromptInput({
             <span className="allm-sr-only">Send message</span>
           </button>
         </div>
+        {/* Credit line. The dot is a 3px separator, quieter than a bullet. */}
+        <p className="allm-m-0 allm-mt-2 allm-flex allm-items-center allm-justify-center allm-gap-x-[6px] allm-font-[family-name:inherit] allm-text-[11px] allm-leading-4 allm-text-[#5F6368]">
+          <span>IASMAR</span>
+          <span
+            aria-hidden="true"
+            className="allm-inline-block allm-w-[3px] allm-h-[3px] allm-rounded-full allm-bg-[#5F6368] allm-opacity-60"
+          />
+          <span>{t("chat.built-by")} C-766</span>
+        </p>
       </form>
     </div>
   );

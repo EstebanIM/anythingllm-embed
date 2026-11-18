@@ -8,6 +8,8 @@ const TRANSLATIONS = {
     "email-support": "Email Support",
     "error-title": "Could not respond to message.",
     "error-detail": "Server error",
+    "open-chat": "Chat with the expert",
+    "built-by": "Built by",
   },
 };
 

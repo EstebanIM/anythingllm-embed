@@ -9,6 +9,8 @@ const TRANSLATIONS = {
     "email-support": "E-mail support",
     "error-title": null,
     "error-detail": null,
+    "open-chat": null,
+    "built-by": null,
   },
 };
 

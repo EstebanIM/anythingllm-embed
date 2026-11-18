@@ -9,6 +9,8 @@ const TRANSLATIONS = {
     "email-support": "Soporte por correo",
     "error-title": "No se pudo responder al mensaje.",
     "error-detail": "Error del servidor",
+    "open-chat": "Chatea con el experto",
+    "built-by": "Desarrollado por",
   },
 };
 

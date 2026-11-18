@@ -4,9 +4,11 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowDown, LoaderCircle } from "lucide-react";
 import { embedderSettings } from "@/main";
 import debounce from "lodash.debounce";
+import { useTranslation } from "react-i18next";
 import { SEND_TEXT_EVENT } from "..";
 
 export default function ChatHistory({ settings = {}, history = [] }) {
+  const { t } = useTranslation();
   const replyRef = useRef(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const chatHistoryRef = useRef(null);
@@ -59,11 +61,11 @@ export default function ChatHistory({ settings = {}, history = [] }) {
     return (
       <div className="allm-h-full allm-overflow-y-auto allm-px-2 allm-py-4 allm-flex allm-flex-col allm-justify-start allm-no-scroll">
         <div className="allm-flex allm-h-full allm-flex-col allm-items-center allm-justify-center">
-          <p className="allm-m-0 allm-px-4 allm-whitespace-pre-line allm-text-[#5F6368] allm-text-sm allm-leading-5 allm-font-[family-name:inherit] allm-py-4 allm-text-center">
+          <p className="allm-m-0 allm-px-4 allm-whitespace-pre-line allm-text-balance allm-text-[#5F6368] allm-text-sm allm-leading-5 allm-font-[family-name:inherit] allm-py-4 allm-text-center">
             {/* Portal grey (6:1 on white). Line breaks in the greeting are
                 kept, so the host decides where each line ends (the Portal
                 breaks right after the expert's full name). */}
-            {settings?.greeting ?? "Send a chat to get started."}
+            {settings?.greeting || t("chat.greeting")}
           </p>
           <SuggestedMessages settings={settings} />
         </div>

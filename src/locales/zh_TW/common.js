@@ -11,6 +11,7 @@ const TRANSLATIONS = {
     "error-detail": null,
     "open-chat": null,
     "built-by": null,
+    greeting: null,
   },
 };
 

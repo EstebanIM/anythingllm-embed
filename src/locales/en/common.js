@@ -10,6 +10,8 @@ const TRANSLATIONS = {
     "error-detail": "Server error",
     "open-chat": "Chat with the expert",
     "built-by": "Built by",
+    greeting:
+      "I answer with what the expert has shared about their experience.\nWhere should we start?",
   },
 };
 

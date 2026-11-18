@@ -54,3 +54,4 @@ Dirección: `C:\Portal GC\docs\design-system.md`. Antislop en modo "durante". Le
 - Botones ⋮ y ×: área de 44 px con un círculo de 32 px que se tiñe `#F4F5F6` al pasar el mouse (y el ⋮ mientras su menú está abierto); 16 px de aire a la derecha, igual que a la izquierda del nombre.
 - La cabecera no se encoge con conversaciones largas (`flex-none`).
 - Cierre: la misma animación al revés (fundido y bajada hacia la esquina del botón, 240 ms, curva de apertura invertida). La ventana se oculta al terminar; con `prefers-reduced-motion` se cierra al instante.
+- Cabecera: el menú ⋮ se reemplaza por un botón de reset (icono `rotate-ccw`) junto a la ×. Hover y foco: reset con `#E8F0FE` e icono `#1A73E8`; × con el rojo de «Cerrar sesión» del Portal (`#FEF2F2` / `#DC2626`). Se retiran el ID de sesión (también de la vista de carga) y el correo de soporte, que solo vivían en ese menú.

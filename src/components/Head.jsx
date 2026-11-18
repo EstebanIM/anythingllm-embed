@@ -181,25 +181,19 @@ const customCss = `
       opacity 240ms ease-out 80ms;
   }
 
-  /* Options menu: a quick fade and drop from the ⋮ button. */
-  @keyframes allm-menu-in {
-    from { opacity: 0; transform: translateY(-4px) scale(0.98); }
-    to { opacity: 1; transform: none; }
-  }
-  .allm-menu-enter {
-    transform-origin: top right;
-    animation: allm-menu-in 160ms cubic-bezier(0.2, 0, 0, 1);
-  }
-
-  /* Header icon buttons: 44px hit area, 32px round chip that tints on
-     hover and stays tinted while its menu is open. */
+  /* Header icon buttons: 44px hit area, 32px round chip that tints on hover
+     and keyboard focus. Reset uses the Portal's brand-subtle blue; close
+     uses the Portal's "Cerrar sesión" red (tokens.css --signout-hover-*). */
   .allm-header-btn .allm-chip {
     transition: background-color 120ms ease-out, color 120ms ease-out;
   }
-  .allm-header-btn:hover .allm-chip,
-  .allm-header-btn[aria-expanded="true"] .allm-chip {
-    background-color: #F4F5F6;
-    color: #1B2A41;
+  .allm-header-btn--reset:is(:hover, :focus-visible) .allm-chip {
+    background-color: #E8F0FE;
+    color: #1A73E8;
+  }
+  .allm-header-btn--close:is(:hover, :focus-visible) .allm-chip {
+    background-color: #FEF2F2;
+    color: #DC2626;
   }
   .allm-header-btn:focus-visible .allm-chip {
     outline: 2px solid #1A73E8;
@@ -207,7 +201,7 @@ const customCss = `
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .allm-chat-enter, .allm-chat-exit, .allm-menu-enter { animation: none; }
+    .allm-chat-enter, .allm-chat-exit { animation: none; }
     #anything-llm-embed-chat-button .allm-launcher-label,
     #anything-llm-embed-chat-button:hover .allm-launcher-label,
     #anything-llm-embed-chat-button:focus-visible .allm-launcher-label,

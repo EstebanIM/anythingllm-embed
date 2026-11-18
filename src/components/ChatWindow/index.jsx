@@ -1,5 +1,4 @@
 import ChatWindowHeader from "./Header";
-import SessionId from "../SessionId";
 import useChatHistory from "@/hooks/chat/useChatHistory";
 import ChatContainer from "./ChatContainer";
 import Sponsor from "../Sponsor";
@@ -23,10 +22,11 @@ export default function ChatWindow({ closeChat, settings, sessionId }) {
           setChatHistory={setChatHistory}
         />
         <ChatHistoryLoading />
-        <div className="allm-pt-4 allm-pb-2 allm-h-fit allm-gap-y-1">
-          <SessionId />
-          <Sponsor settings={settings} />
-        </div>
+        {!settings.noSponsor && (
+          <div className="allm-pt-4 allm-pb-2 allm-h-fit">
+            <Sponsor settings={settings} />
+          </div>
+        )}
       </div>
     );
   }

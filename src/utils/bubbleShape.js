@@ -22,3 +22,9 @@ export function bubbleRadiusClass(role, singleLine) {
   if (singleLine) return PILL;
   return role === "user" ? USER_CORNERS : ASSISTANT_CORNERS;
 }
+
+// The message field follows the same rule as the bubbles.
+const FIELD_MULTILINE = "allm-rounded-[20px]";
+export function fieldRadiusClass(singleLine) {
+  return singleLine ? PILL : FIELD_MULTILINE;
+}

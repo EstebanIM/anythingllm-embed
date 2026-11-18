@@ -1,6 +1,18 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { isSingleLine, bubbleRadiusClass } from "./bubbleShape.js";
+import {
+  isSingleLine,
+  bubbleRadiusClass,
+  fieldRadiusClass,
+} from "./bubbleShape.js";
+
+test("fieldRadiusClass is a pill while the message fits on one line", () => {
+  assert.equal(fieldRadiusClass(true), "allm-rounded-full");
+});
+
+test("fieldRadiusClass uses 20px corners from the second line on", () => {
+  assert.equal(fieldRadiusClass(false), "allm-rounded-[20px]");
+});
 
 test("isSingleLine is true when the content is one line tall", () => {
   assert.equal(isSingleLine({ contentHeight: 20, lineHeight: 20 }), true);

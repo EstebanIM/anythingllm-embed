@@ -59,7 +59,8 @@ export default function ChatHistory({ settings = {}, history = [] }) {
     return (
       <div className="allm-h-full allm-overflow-y-auto allm-px-2 allm-py-4 allm-flex allm-flex-col allm-justify-start allm-no-scroll">
         <div className="allm-flex allm-h-full allm-flex-col allm-items-center allm-justify-center">
-          <p className="allm-text-slate-400 allm-text-sm allm-font-sans allm-py-4 allm-text-center">
+          <p className="allm-m-0 allm-max-w-[260px] allm-text-balance allm-text-[#5F6368] allm-text-sm allm-leading-5 allm-font-[family-name:inherit] allm-py-4 allm-text-center">
+            {/* Portal grey (6:1 on white); the old slate-400 was 2.6:1. */}
             {settings?.greeting ?? "Send a chat to get started."}
           </p>
           <SuggestedMessages settings={settings} />

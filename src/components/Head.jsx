@@ -140,6 +140,18 @@ const customCss = `
   .allm-chat-enter {
     animation: allm-chat-in 240ms cubic-bezier(0.2, 0, 0, 1);
   }
+  /* Closing: the opening animation played backwards, toward the launcher's
+     corner. Its own keyframes (reusing allm-chat-in would not restart it)
+     with the opening curve mirrored: (x1,y1,x2,y2) -> (1-x2,1-y2,1-x1,1-y1).
+     It holds the hidden frame so the window does not flash back. */
+  @keyframes allm-chat-out {
+    from { opacity: 1; transform: none; }
+    to { opacity: 0; transform: translateY(16px) scale(0.96); }
+  }
+  .allm-chat-exit {
+    animation: allm-chat-out 240ms cubic-bezier(1, 0, 0.8, 1) forwards;
+    pointer-events: none;
+  }
 
   /* Launcher: on hover or keyboard focus it opens toward the page and shows
      its label, so the icon alone is never the only explanation. */
@@ -195,7 +207,7 @@ const customCss = `
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .allm-chat-enter, .allm-menu-enter { animation: none; }
+    .allm-chat-enter, .allm-chat-exit, .allm-menu-enter { animation: none; }
     #anything-llm-embed-chat-button .allm-launcher-label,
     #anything-llm-embed-chat-button:hover .allm-launcher-label,
     #anything-llm-embed-chat-button:focus-visible .allm-launcher-label,

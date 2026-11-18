@@ -53,3 +53,4 @@ Dirección: `C:\Portal GC\docs\design-system.md`. Antislop en modo "durante". Le
 - Menú ⋮: aparece con fundido y caída de 4 px en 160 ms; filas de 40 px en 14 px peso 400 navy con iconos de 18 px grises; borde y sombra como la ventana.
 - Botones ⋮ y ×: área de 44 px con un círculo de 32 px que se tiñe `#F4F5F6` al pasar el mouse (y el ⋮ mientras su menú está abierto); 16 px de aire a la derecha, igual que a la izquierda del nombre.
 - La cabecera no se encoge con conversaciones largas (`flex-none`).
+- Cierre: la misma animación al revés (fundido y bajada hacia la esquina del botón, 240 ms, curva de apertura invertida). La ventana se oculta al terminar; con `prefers-reduced-motion` se cierra al instante.

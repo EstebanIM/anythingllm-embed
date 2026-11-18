@@ -4,7 +4,10 @@ import useOpenChat from "@/hooks/useOpen";
 import Head from "@/components/Head";
 import OpenButton from "@/components/OpenButton";
 import ChatWindow from "./components/ChatWindow";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+
+// Same length as the open/close keyframes in Head.jsx.
+const CHAT_ANIMATION_MS = 240;
 import { I18nextProvider } from "react-i18next";
 import { LucideProvider } from "lucide-react";
 import i18next from "@/i18n";
@@ -13,6 +16,24 @@ export default function App() {
   const { isChatOpen, toggleOpenChat } = useOpenChat();
   const embedSettings = useGetScriptAttributes();
   const sessionId = useSessionId();
+
+  // Closing plays the opening animation in reverse, then hides the window.
+  // A timer (not animationend) ends it, so a background tab still closes.
+  const [closing, setClosing] = useState(false);
+  const closeTimer = useRef(null);
+  const closeChat = () => {
+    if (closing) return;
+    const reduceMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduceMotion) return toggleOpenChat(false);
+    setClosing(true);
+    closeTimer.current = setTimeout(() => {
+      setClosing(false);
+      toggleOpenChat(false);
+    }, CHAT_ANIMATION_MS);
+  };
+  useEffect(() => () => clearTimeout(closeTimer.current), []);
 
   useEffect(() => {
     if (embedSettings.openOnLoad === "on") {
@@ -54,12 +75,12 @@ export default function App() {
               // The open animation grows from the launcher's corner.
               transformOrigin: position.replace("-", " "),
             }}
-            className={`allm-h-full allm-w-full allm-bg-white allm-fixed allm-bottom-0 allm-right-0 allm-mb-4 allm-md:mr-4 allm-rounded-2xl allm-overflow-hidden allm-border allm-border-solid allm-border-[#E3E5E8] allm-shadow-[0_8px_24px_rgba(8,36,63,0.12)] allm-flex allm-flex-col ${positionClasses[position]} ${isChatOpen ? "allm-chat-enter" : ""}`}
+            className={`allm-h-full allm-w-full allm-bg-white allm-fixed allm-bottom-0 allm-right-0 allm-mb-4 allm-md:mr-4 allm-rounded-2xl allm-overflow-hidden allm-border allm-border-solid allm-border-[#E3E5E8] allm-shadow-[0_8px_24px_rgba(8,36,63,0.12)] allm-flex allm-flex-col ${positionClasses[position]} ${closing ? "allm-chat-exit" : isChatOpen ? "allm-chat-enter" : ""}`}
             id="anything-llm-chat"
           >
             {isChatOpen && (
               <ChatWindow
-                closeChat={() => toggleOpenChat(false)}
+                closeChat={closeChat}
                 settings={embedSettings}
                 sessionId={sessionId}
               />

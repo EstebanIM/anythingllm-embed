@@ -44,7 +44,9 @@ export default function App() {
         >
           <div
             style={{
-              maxWidth: windowWidth,
+              // Never wider than the screen minus the 16px side margins, so
+              // the header and the field are not cut off on phones.
+              maxWidth: `min(${windowWidth}, calc(100vw - 32px))`,
               maxHeight: windowHeight,
               height: "100%",
             }}

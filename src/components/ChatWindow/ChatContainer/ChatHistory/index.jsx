@@ -1,6 +1,6 @@
 import HistoricalMessage from "./HistoricalMessage";
 import PromptReply from "./PromptReply";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowDown, LoaderCircle } from "lucide-react";
 import { embedderSettings } from "@/main";
 import debounce from "lodash.debounce";
@@ -11,8 +11,17 @@ export default function ChatHistory({ settings = {}, history = [] }) {
   const [isAtBottom, setIsAtBottom] = useState(true);
   const chatHistoryRef = useRef(null);
 
+  // The first time the conversation is shown it jumps to the latest message
+  // before paint, so reopening the chat does not scroll through the whole
+  // history while the window animates in. Later messages scroll smoothly.
+  const shownOnce = useRef(false);
+  useLayoutEffect(() => {
+    if (shownOnce.current || history.length === 0) return;
+    shownOnce.current = true;
+    scrollToBottom("auto");
+  }, [history]);
   useEffect(() => {
-    scrollToBottom();
+    if (shownOnce.current) scrollToBottom();
   }, [history]);
 
   const handleScroll = () => {
@@ -37,11 +46,11 @@ export default function ChatHistory({ settings = {}, history = [] }) {
     watchScrollEvent();
   }, []);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = (behavior = "smooth") => {
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTo({
         top: chatHistoryRef.current.scrollHeight,
-        behavior: "smooth",
+        behavior,
       });
     }
   };
@@ -108,7 +117,7 @@ export default function ChatHistory({ settings = {}, history = [] }) {
             <div className="allm-rounded-full allm-border allm-border-white/10 allm-bg-black/20 hover:allm-bg-black/50 allm-w-8 allm-h-8 allm-flex allm-items-center allm-justify-center">
               <ArrowDown
                 className="allm-text-white/50 allm-w-4 allm-h-4"
-                onClick={scrollToBottom}
+                onClick={() => scrollToBottom()}
                 id="scroll-to-bottom-button"
                 aria-label="Scroll to bottom"
               />

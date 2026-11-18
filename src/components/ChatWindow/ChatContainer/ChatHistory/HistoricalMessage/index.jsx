@@ -5,9 +5,9 @@ import DOMPurify from "@/utils/chat/purify";
 import { embedderSettings } from "@/main";
 import { v4 } from "uuid";
 import { formatDate } from "@/utils/date";
-import { readableTextColor } from "@/utils/color";
 import { useTranslation } from "react-i18next";
 import {
+  bubbleColorStyle,
   BUBBLE_FONT,
   BUBBLE_ROW,
   BUBBLE_PADDING,
@@ -85,8 +85,7 @@ const HistoricalMessage = forwardRef(
       <div className={BUBBLE_ROW}>
         {role === "assistant" && (
           <div className={ASSISTANT_NAME}>
-            {embedderSettings.settings.assistantName ||
-              "Chat Assistant"}
+            {embedderSettings.settings.assistantName || "Chat Assistant"}
           </div>
         )}
         <div
@@ -99,7 +98,7 @@ const HistoricalMessage = forwardRef(
           <div
             style={{
               wordBreak: "break-word",
-              ...(error ? {} : { backgroundColor: msgBg, color: readableTextColor(msgBg) }),
+              ...(error ? {} : bubbleColorStyle(msgBg)),
             }}
             className={`${BUBBLE_PADDING} allm-flex allm-flex-col ${BUBBLE_FONT} ${
               error

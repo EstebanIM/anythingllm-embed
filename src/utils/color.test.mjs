@@ -1,6 +1,11 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { contrastRatio, readableTextColor } from "./color.js";
+import {
+  contrastRatio,
+  readableTextColor,
+  linkColor,
+  indicatorColor,
+} from "./color.js";
 
 const round2 = (n) => Math.round(n * 100) / 100;
 
@@ -35,4 +40,33 @@ test("readableTextColor falls back to navy for invalid backgrounds", () => {
   assert.equal(readableTextColor("azul"), "#1B2A41");
   assert.equal(readableTextColor(""), "#1B2A41");
   assert.equal(readableTextColor(undefined), "#1B2A41");
+});
+
+test("readableTextColor reads rgb() and rgba() backgrounds", () => {
+  assert.equal(readableTextColor("rgb(27, 43, 68)"), "#FFFFFF");
+  assert.equal(readableTextColor("rgb(27 43 68)"), "#FFFFFF");
+  assert.equal(readableTextColor("rgba(244, 245, 246, 1)"), "#1B2A41");
+});
+
+test("readableTextColor reads 4- and 8-digit hex, compositing alpha over white", () => {
+  assert.equal(readableTextColor("#1b2b44ff"), "#FFFFFF");
+  assert.equal(readableTextColor("#000a"), "#FFFFFF");
+  // Nearly transparent black over the white window is still light.
+  assert.equal(readableTextColor("#0000000d"), "#1B2A41");
+});
+
+test("linkColor keeps the Portal action blue on light bubbles", () => {
+  assert.equal(linkColor("#F4F5F6"), "#155FC4");
+});
+
+test("linkColor falls back to the bubble text color on dark bubbles", () => {
+  assert.equal(linkColor("#1B2B44"), "#FFFFFF");
+});
+
+test("indicatorColor keeps the Portal grey where it reaches 3:1", () => {
+  assert.equal(indicatorColor("#F4F5F6"), "#5F6368");
+});
+
+test("indicatorColor switches to the bubble text color on dark bubbles", () => {
+  assert.equal(indicatorColor("#1B2B44"), "#FFFFFF");
 });

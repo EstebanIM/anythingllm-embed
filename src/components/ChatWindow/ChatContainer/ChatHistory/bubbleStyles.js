@@ -2,6 +2,24 @@
 // stay visually identical. Values come from the Portal GC design system.
 // Bubble backgrounds and shapes live in main.jsx (USER_STYLES /
 // ASSISTANT_STYLES) because they depend on the branding.
+import { readableTextColor, linkColor, indicatorColor } from "@/utils/color";
+import { normalizeCssColor } from "@/utils/cssColor";
+
+/**
+ * Inline style for a bubble on `background`: the text color plus the link
+ * and typing-dot colors (CSS variables read by Head.jsx), all derived from
+ * the same background so they stay legible on any brand color.
+ */
+export function bubbleColorStyle(background) {
+  const bg = normalizeCssColor(background);
+  return {
+    backgroundColor: background,
+    color: readableTextColor(bg),
+    "--allm-link": linkColor(bg),
+    "--allm-indicator": indicatorColor(bg),
+  };
+}
+
 // Inherit the host page's font: inside the Portal that is its local Inter.
 export const BUBBLE_FONT = "allm-font-[family-name:inherit]";
 export const BUBBLE_ROW = "allm-py-[6px]";

@@ -3,9 +3,9 @@ import { Warning, CircleNotch, CaretDown } from "@phosphor-icons/react";
 import renderMarkdown from "@/utils/chat/markdown";
 import { embedderSettings } from "@/main";
 import { formatDate } from "@/utils/date";
-import { readableTextColor } from "@/utils/color";
 import { useTranslation } from "react-i18next";
 import {
+  bubbleColorStyle,
   BUBBLE_FONT,
   BUBBLE_ROW,
   BUBBLE_PADDING,
@@ -17,8 +17,7 @@ import {
 
 const assistantBubbleStyle = () => ({
   wordBreak: "break-word",
-  backgroundColor: embedderSettings.ASSISTANT_STYLES.msgBg,
-  color: readableTextColor(embedderSettings.ASSISTANT_STYLES.msgBg),
+  ...bubbleColorStyle(embedderSettings.ASSISTANT_STYLES.msgBg),
 });
 const assistantBubbleClass = () =>
   `${BUBBLE_PADDING} allm-flex allm-flex-col ${BUBBLE_FONT} ${embedderSettings.ASSISTANT_STYLES.base} allm-anything-llm-assistant-message`;
@@ -103,11 +102,13 @@ const PromptReply = forwardRef(
       return (
         <div className={BUBBLE_ROW}>
           <div className={ASSISTANT_NAME}>
-            {embedderSettings.settings.assistantName ||
-              "Chat Assistant"}
+            {embedderSettings.settings.assistantName || "Chat Assistant"}
           </div>
           <div className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start">
-            <div style={assistantBubbleStyle()} className={assistantBubbleClass()}>
+            <div
+              style={assistantBubbleStyle()}
+              className={assistantBubbleClass()}
+            >
               {hasIncompleteThinkTag && streamingThought && (
                 <ThoughtBubble thought={streamingThought} />
               )}
@@ -122,8 +123,7 @@ const PromptReply = forwardRef(
       return (
         <div className={BUBBLE_ROW}>
           <div className={ASSISTANT_NAME}>
-            {embedderSettings.settings.assistantName ||
-              "Chat Assistant"}
+            {embedderSettings.settings.assistantName || "Chat Assistant"}
           </div>
           <div className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start">
             <div
@@ -147,15 +147,17 @@ const PromptReply = forwardRef(
     return (
       <div className={BUBBLE_ROW}>
         <div className={ASSISTANT_NAME}>
-          {embedderSettings.settings.assistantName ||
-            "Chat Assistant"}
+          {embedderSettings.settings.assistantName || "Chat Assistant"}
         </div>
         <div
           key={uuid}
           ref={ref}
           className="allm-flex allm-items-start allm-w-full allm-h-fit allm-justify-start"
         >
-          <div style={assistantBubbleStyle()} className={assistantBubbleClass()}>
+          <div
+            style={assistantBubbleStyle()}
+            className={assistantBubbleClass()}
+          >
             {thoughts.length > 0 && (
               <ThoughtBubble thought={thoughts.join("\n\n")} />
             )}
@@ -170,9 +172,7 @@ const PromptReply = forwardRef(
           </div>
         </div>
         {sentAt && (
-          <div className={TIMESTAMP_ASSISTANT}>
-            {formatDate(sentAt)}
-          </div>
+          <div className={TIMESTAMP_ASSISTANT}>{formatDate(sentAt)}</div>
         )}
       </div>
     );

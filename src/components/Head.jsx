@@ -24,9 +24,9 @@ const customCss = `
     width: 10px;
     height: 10px;
     border-radius: 5px;
-    background-color: #5F6368;
+    background-color: var(--allm-indicator, #5F6368);
     color: #5fa4fa;
-    box-shadow: 9999px 0 0 0 #5F6368;
+    box-shadow: 9999px 0 0 0 var(--allm-indicator, #5F6368);
     animation: dot-falling 1.5s infinite linear;
     animation-delay: 0.1s;
   }
@@ -43,8 +43,8 @@ const customCss = `
     width: 10px;
     height: 10px;
     border-radius: 5px;
-    background-color: #5F6368;
-    color: #5F6368;
+    background-color: var(--allm-indicator, #5F6368);
+    color: var(--allm-indicator, #5F6368);
     animation: dot-falling-before 1.5s infinite linear;
     animation-delay: 0s;
   }
@@ -53,8 +53,8 @@ const customCss = `
     width: 10px;
     height: 10px;
     border-radius: 5px;
-    background-color: #5F6368;
-    color: #5F6368;
+    background-color: var(--allm-indicator, #5F6368);
+    color: var(--allm-indicator, #5F6368);
     animation: dot-falling-after 1.5s infinite linear;
     animation-delay: 0.2s;
   }
@@ -66,7 +66,7 @@ const customCss = `
     25%,
     50%,
     75% {
-      box-shadow: 9999px 0 0 0 #5F6368;
+      box-shadow: 9999px 0 0 0 var(--allm-indicator, #5F6368);
     }
     100% {
       box-shadow: 9999px 15px 0 0 rgba(152, 128, 255, 0);
@@ -80,7 +80,7 @@ const customCss = `
     25%,
     50%,
     75% {
-      box-shadow: 9984px 0 0 0 #5F6368;
+      box-shadow: 9984px 0 0 0 var(--allm-indicator, #5F6368);
     }
     100% {
       box-shadow: 9984px 15px 0 0 rgba(152, 128, 255, 0);
@@ -94,7 +94,7 @@ const customCss = `
     25%,
     50%,
     75% {
-      box-shadow: 10014px 0 0 0 #5F6368;
+      box-shadow: 10014px 0 0 0 var(--allm-indicator, #5F6368);
     }
     100% {
       box-shadow: 10014px 15px 0 0 rgba(152, 128, 255, 0);
@@ -119,10 +119,11 @@ const customCss = `
     margin: 0px;
   }
 
-  /* Links in bubbles. Assistant: the Portal's --action blue. User: the
-     bubble is already blue, so the link keeps the text color. */
+  /* Links in bubbles. Assistant: the Portal's --action blue, or the text
+     color when the bubble is too dark for it (--allm-link, set per bubble).
+     User: the bubble is already blue, so the link keeps the text color. */
   .allm-anything-llm-assistant-message a {
-    color: #155FC4;
+    color: var(--allm-link, #155FC4);
     text-decoration: underline;
   }
   .allm-anything-llm-user-message a {
